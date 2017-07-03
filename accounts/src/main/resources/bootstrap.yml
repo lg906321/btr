@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: accounts
+  #云配置
+  cloud:
+    config:
+      uri: http://localhost:8888
+      username: btr
+      password: btr
+
+---
+
+spring:
+  profiles: docker
+  #应用名
+  application:
+    name: accounts
+  #云配置
+  cloud:
+    config:
+      uri: ${CONFIG_SERVER}
+      username: btr
+      password: btr
