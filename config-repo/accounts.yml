@@ -2,8 +2,8 @@ spring:
   data:
     #mongodb设置
     mongodb:
-      host: localhost
-      port: 27017
+      host: wechat.oasiscare.cn:37017
+      port: 37017
       database: accounts
       events:
         collection.name: events
@@ -12,7 +12,7 @@ spring:
   redis:
     port: 6379
     #主机地址
-    host: localhost
+    host: 60.205.106.190
     pool:
       #连接池最大的活跃连接数，-1表示无限
       max-active: 8
@@ -136,8 +136,8 @@ server:
 security:
   #基础认证账号密码
   user:
-    name: admin
-    password: admin
+    name: btr
+    password: btr
   #oauth2授权
   oauth2:
     #客户端设置
