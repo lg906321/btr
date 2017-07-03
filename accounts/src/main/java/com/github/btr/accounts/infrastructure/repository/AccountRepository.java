@@ -10,15 +10,23 @@ import java.util.Optional;
 /**
  * Created by ryze on 2017/7/3.
  */
-public interface AccountRepository extends MongoRepository<Account,String>
+public interface AccountRepository extends MongoRepository<Account, String>
 {
 	/**
-	 * 用户名和登录端
+	 * 账号名和登录端
 	 * @param username
 	 * @param appCode
 	 * @return
 	 */
-	Optional<Account> findAccountByUsernameAndAppCode(String username,int appCode);
+	Optional<Account> findAccountByUsernameAndAppCode(String username, int appCode);
 
-	Page<Account> findAccounts(final Pageable pageable);
+	/**
+	 * 指定端的所有账号
+	 * @param appCode
+	 * @param pageable
+	 * @return
+	 */
+	Page<Account> findAccountsByAppCode(int appCode, Pageable pageable);
+
+	Optional<Account> findAccountById(String id);
 }

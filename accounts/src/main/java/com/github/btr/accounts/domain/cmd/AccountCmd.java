@@ -1,7 +1,6 @@
 package com.github.btr.accounts.domain.cmd;
 
 import lombok.Builder;
-import lombok.Value;
 import org.axonframework.commandhandling.TargetAggregateIdentifier;
 
 /**
@@ -10,7 +9,6 @@ import org.axonframework.commandhandling.TargetAggregateIdentifier;
  */
 public interface AccountCmd
 {
-	@Value
 	@Builder
 	final class Register implements AccountCmd
 	{

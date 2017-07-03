@@ -29,13 +29,13 @@ public class AccountCmdHandler
 	}
 
 	@CommandHandler
-	public void handle(final AccountCmd.Register cmd)
+	public Object handle(final AccountCmd.Register cmd)
 	{
 		log.info("账号注册命令处理");
 		//是否已创建
 		val accountOp = accountRepository.findAccountByUsernameAndAppCode(cmd.username,cmd.appCode);
 		//已创建
-		accountOp.map(data ->
+		return accountOp.map(data ->
 		{
 			throw new IllegalArgumentException("无效的命令,用户"+data.getUsername()+"已创建!");
 			//未创建
@@ -44,7 +44,7 @@ public class AccountCmdHandler
 			try
 			{
 				//账号创建
-				return repository.newInstance(() -> new Account(cmd)).invoke(d -> d);
+				return repository.newInstance(() -> new Account(cmd)).invoke(Account::getId);
 			}
 			catch (Exception e)
 			{

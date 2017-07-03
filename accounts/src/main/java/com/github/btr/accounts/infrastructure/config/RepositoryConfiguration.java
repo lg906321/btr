@@ -15,8 +15,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RepositoryConfiguration
 {
-//	@Autowired
-//	private EventStore eventStore;
 	private final EventStore eventStore;
 
 	@Autowired

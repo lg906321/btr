@@ -17,6 +17,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 /**
  * Created by ryze on 2017/7/3.
  */
@@ -41,23 +43,27 @@ public class AccountServiceImpl implements AccountService
 		val cmd = AccountCmd.Register.builder().id(dto.id).username(dto.username).password(dto.password)
 									.captcha(dto.captcha).appCode(dto.appCode).loginTypeCode(dto.loginTypeCode).build();
 		//异步回调
-		val future = new FutureCallback<AccountCmd.Register, Account>();
+		val future = new FutureCallback<AccountCmd.Register, String>();
 		//发送命令
 		commandGateway.send(cmd, future);
 		//命令结果
 		val result = future.getResult();
-		System.out.println("future =====> " + result);
-
-		return result.getId();
+		return result;
 	}
 
 	@Override
 	@Transactional(propagation = Propagation.NOT_SUPPORTED, readOnly = true)
-	public Page<AccountDTO> getAccounts(final Pageable pageable)
+	public Page<AccountDTO> getAppAccounts(final int appCode, final Pageable pageable)
 	{
-		val page  = accountRepository.findAccounts(pageable);
+		val page  = accountRepository.findAccountsByAppCode(appCode, pageable);
 		val datas = AccountAssembler.toDTOs(page.getContent());
 
 		return new PageImpl<>(datas, pageable, page.getTotalElements());
+	}
+
+	@Override
+	public Optional<AccountDTO> getAccountInfo(final String id)
+	{
+		return accountRepository.findAccountById(id).map(AccountAssembler::toDTO);
 	}
 }
